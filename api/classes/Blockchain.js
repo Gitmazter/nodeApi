@@ -2,11 +2,12 @@ const Block = require("./Block");
 
 class Blockchain {
     constructor() {
-        this.difficulty = 3;
-        this.blockchain = [Genesis()]   
+        this.difficulty = 2;
+        this.blockchain = [this.Genesis()]   
     }
+
     Genesis() {
-            return new Block(
+        return new Block(
             {
                 "type" : "Genesis-token-transfer",
                 "amount": "100",
@@ -14,13 +15,25 @@ class Blockchain {
                 "to" :  "0xAndziDev0g123ji418ss1324frtygs34fd1232",
                 "success" : true,
             },
-            "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
-            this.difficulty
+            "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d", //Solana genesis hash
+            this.difficulty,
+            0
         )
     }
-    addBlock(){
 
-    }
+    addBlock(data){
+        const blockDepth = this.blockchain.length
+        const block = new Block(
+            data,
+            this.blockchain[ blockDepth - 1 ].prevHash,
+            this.difficulty,
+            blockDepth
+        )
+        this.blockchain.push(block)
+        return false
+    } 
+
 }
+
 
 module.exports = Blockchain
