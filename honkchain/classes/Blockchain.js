@@ -4,6 +4,7 @@ const fs = require('fs')
 class Blockchain {
     constructor() {
         this.difficulty = 2;
+        this.blockDepth = 0;
         this.blockchain = [this.Genesis()]   
     }
 
@@ -23,7 +24,6 @@ class Blockchain {
     }
 
     addBlock(data){
-        const blockDepth = this.blockchain.length
         const block = new Block(
             data,
             this.blockchain[ blockDepth - 1 ].prevHash,
@@ -31,6 +31,7 @@ class Blockchain {
             blockDepth
         )
         this.blockchain.push(block)
+        this.blockDepth += 1
 
         //file = fs.writeFile('../blockchain.json', this.blockchain)
 

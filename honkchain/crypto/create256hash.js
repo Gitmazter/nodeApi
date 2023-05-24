@@ -1,5 +1,3 @@
-// Importera Node.js egna crypto bibliotek...
-
 const crypto = require('crypto');
 
 const createHash = (...args) => {

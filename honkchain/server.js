@@ -1,73 +1,59 @@
-const Blockchain = require('./classes/Blockchain')
 const express = require('express')
-const fs = require('fs')
-const validateData = require('./modules/validateData')
+const router = require('./routes/honk-routes')
+const cors = require('cors')
+const AppError = require('./utils/AppError');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express()
-const blockchain = new Blockchain()
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
+app.use(express.json())
+app.use('/honkRpc', router)
 
-blockchain.addBlock({"type":"Create Account"})
-console.log(blockchain.blockchain);
+app.all('*', (req, res, next) => {
+    next(
+        new AppError(
+          `We honkly believe ${req.originalUrl}, is a honking wronk URL!`,
+          404
+        )
+    );
+});
+
+app.use(errorHandler);
+
+PORT = 6969;
+app.listen(
+    PORT,
+    console.log(`This server be honking on port: ${PORT} in DEV MODE`)
+)
 
 
-const data = {"type":"GOC-token-transfer"}
+// SIGNSHIT // Send with Pubkey
+// const nacl = require('tweetnacl')
+// const message = "hello"
+// const msg = JSON.stringify(message);
+// const msgBuffer = new Buffer.from(msg)
+// const u8Msg = new Uint8Array(msgBuffer, 0, msg.length-1)
+// const signedTx = nacl.sign(u8Msg, secretKey )
 
-if (validateData(data) == true) {
-    blockchain.addBlock(data)
-    console.log(blockchain.blockchain);
-}
-
-app.get('//gooseApi/blockHistory/', (req, res) => {
-    // Search for whole history (Blockchain explorer),
-    res.status(200).json(blockchain.blockchain);
-})
-
-app.post('//gooseApi/blockHistory/range/', (req, res) => {
-    // between timestamps (range) 
-    const { data } = req.body;
-
-    const { start } = data;
-    const { end }  = data;
-
-    const historyInRange = getHistoryInRange(start, end) // Write this
-
-    res.status(201).json({message : `All blocks from ${start} until ${end}`, chain: historyInRange})
-})
-
-app.post('//gooseApi/blockHistory/Account/', (req, res) => {
-    // Account History
-    const { data } = req.body;
-    const { address } = data;
-    const accountHistory =  getAccountHistory(address) // add func
-
-    res.status(202).json()
-})
-
-app.post('//gooseApi/addTransact', (req, res) => {
-    // CreateAccount + --Grind --address-starts-with ""
-    const { data } = req.body;
-    const txData = validateData(data)
-
-    const block = blockchain.addBlock({ txData })
-
-    res.status(203).json({message : 'transaction processed', block: block})
-})
-
+// Verify SIGNSHIT
+// const verifyTx = nacl.sign.open(signedTx, publicKey)
+// var string = new TextDecoder().decode(verifyTx);
+// var json = JSON.parse(string)
+// console.log(json)
+//const signer = new Signer()
+// signer.sign(txData)
+// Get whole blockchain history
+// Get time range history
+// Get account history
 // Airdrop $GOOS || Send 100 $GOOS
 // Send $GOOS || Sends $GOOS to address
 // Buy Goose NFT || Mints Goose NFT with random goose image
-// Burn assets || Burns $Goos or $GOOS nft
-
+// Burn assets || Burnasds $Goos or $GOOS nft
 // Type : {
-// GOS-Create-Account | Return < Private Key >
 // GOS-Airdrop < address > | Tx hash confirmation and new balance
 // GOS-Transact <receiver> <amount> | Tx hash confirmation and new balance
 // GOS-Mint-Nft <address> | Tx hash confirmation and new balance 
 // GOS-Asset-Burn <asset> <amount> | Tx hash confirmation and new balance 
 // }
-
-PORT = 7777;
-
-app.listen(PORT, () => {
-    console.log(`This server be banging on port: ${PORT}`);
-})

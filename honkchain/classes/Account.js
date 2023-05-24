@@ -1,21 +1,19 @@
-const crypto = require('crypto')
-const generateAddress = require('../modules/generateAddress')
+const nacl = require('tweetnacl')
 
-
+// Do this client side for security purposes
 class Account {
-    constructor() {
-        this.privateKey = this.createAccount()
-        this.pubKey = ''
+    constructor(vanityString) {
+
+        vanityString === undefined 
+        ? this.keys = nacl.sign.keyPair()
+        : this.keys = this.getVanity(vanityString)
     }
-    findTxs(pubkey){
-        // get and search blockchain history for transactions, if none return [ ]
-        return []
-    }
-    createAccount() {
-        
-    }
-    signer(){
-        // this.privateKey
-        return signature
+
+    // Vanity can probably be refactored and broken out
+    // CreateAccount + --Grind --address-starts-with ""
+    getVanity(vanityString) {
+        // Rewrite func here
     }
 }
+
+module.exports = Account
