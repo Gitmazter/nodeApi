@@ -1,4 +1,5 @@
 const Block = require("./Block");
+const fs = require('fs')
 
 class Blockchain {
     constructor() {
@@ -30,6 +31,9 @@ class Blockchain {
             blockDepth
         )
         this.blockchain.push(block)
+
+        //file = fs.writeFile('../blockchain.json', this.blockchain)
+
         return false
     } 
 

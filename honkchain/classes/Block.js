@@ -1,5 +1,5 @@
-const createHash = require("../services/create256hash");
-const powValidator = require("../services/powValidator");
+const createHash = require("../crypto/create256hash");
+const powValidator = require("../crypto/powValidator");
 
 class Block {
     constructor(data, prevHash, difficulty, blockDepth) {
