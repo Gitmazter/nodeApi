@@ -2,8 +2,8 @@ const Account = require('./Account');
 const nacl = require('tweetnacl')
 
 class Signer {
-    constructor(keypair, vanityString){ // if keypair supplied, create signer from keypair
-        this.account = new Account(keypair, vanityString)
+    constructor(secretKey, vanityString){ // if keypair supplied, create signer from keypair
+        this.account = new Account(secretKey, vanityString)
     }
     
     sign(message){

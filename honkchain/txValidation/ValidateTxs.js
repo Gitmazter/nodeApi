@@ -1,7 +1,7 @@
 const validateTransact = (instructions) => {}
 
 const validateAirdrop = (instructions, sender) => {
-    console.log(instructions, sender);
+    //console.log(instructions, sender);
     if(sender != instructions.to) {
         return false
     }

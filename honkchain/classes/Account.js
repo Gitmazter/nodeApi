@@ -4,9 +4,9 @@ const vanityAddressChecker = require('../crypto/vanityAddressChecker')
 
 // Do this client side for security purposes
 class Account {
-    constructor(keypair, vanityString) {
-        if (keypair != undefined) {
-            this.keys = keypair
+    constructor(secretKey, vanityString) {
+        if (secretKey != undefined) {
+            this.keys = nacl.sign.keyPair.fromSecretKey(secretKey)
         }
         else if (vanityString != undefined ) {
             this.keys = this.grind(vanityString)

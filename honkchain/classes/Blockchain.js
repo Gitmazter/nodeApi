@@ -18,7 +18,7 @@ class Blockchain {
             this.difficulty,
             0
         )
-        fs.writeFileSync('../chaindata.json', `${JSON.stringify(block)},\n`)
+        fs.writeFileSync('../chaindata.json', `${JSON.stringify(block)}\n`)
         return block
     } 
 

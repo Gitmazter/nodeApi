@@ -1,7 +1,7 @@
 const {validateTransact, validateAirdrop, validateBurn, validateNft} = require('./ValidateTxs')
 
 const validateTxData = (data) => {
-    console.log(data);
+    //console.log(data);
     let errorMessage = ""
     let instructions;
 
@@ -20,7 +20,7 @@ const validateTxData = (data) => {
                 validateTransact(instructions)
                 break
             case "HONK-airdrop":
-                console.log('its a drop');
+                //console.log('its a drop');
                 const valid = validateAirdrop(instructions, data.sender)
                 if (valid !== true) {errorMessage = valid; return errorMessage}
                 return valid

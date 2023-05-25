@@ -3,10 +3,13 @@ const Signer = require('../classes/Signer')
 const validateData = require('../txValidation/validateTxData')
 const AppError = require('../utils/AppError');
 const json2Uint8 = require('../txValidation/json2uint8')
-const ownerSigner = new Signer(null, null)
-const blockchain = new Blockchain(ownerSigner)
 
-console.log(blockchain.blockchain);
+const { OWNER_PRIVATEKEY } = require('../env')
+
+const ownerSigner = new Signer(OWNER_PRIVATEKEY, null)
+
+const blockchain = new Blockchain(ownerSigner)
+//console.log(blockchain.blockchain);
 const response = {
     status: 'Not found',
     statusCode: 404,
