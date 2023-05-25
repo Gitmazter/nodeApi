@@ -1,4 +1,4 @@
-const OWNER_PRIVATEKEY = Uint8Array.from([
+const OWNER_PRIVATEKEY = Uint8Array.from([ // Left unignored on purpose for now
     241, 140, 105,  89, 145,   1,  86, 137, 152, 232, 124,
       9, 105, 174,   6,  69, 136,  29, 105, 185, 113, 165,
      43,  61,   6, 162,  96, 190, 120,  52, 143, 206, 152,
