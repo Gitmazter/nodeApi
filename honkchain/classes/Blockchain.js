@@ -20,7 +20,7 @@ class Blockchain {
         )
         fs.writeFileSync('../chaindata.json', `${JSON.stringify(block)},\n`)
         return block
-    }
+    } 
 
     addBlock(data){
         const blockDepth = this.blockchain.length
@@ -31,7 +31,7 @@ class Blockchain {
             blockDepth
         )
         this.blockchain.push(block)
-        fs.writeFileSync('../chaindata.json', `${JSON.stringify(block)},\n`,{flag: 'a+'})
+        fs.writeFileSync('../chaindata.json', `${JSON.stringify(this)}\n`)
         return block
     } 
 
