@@ -8,7 +8,7 @@ class AirdropTx {
             to : sender,
             token : "GOOS",
             amount : 10000000,
-            success : true //always true
+            success : false //always true
         }
     }
 }

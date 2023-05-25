@@ -4,7 +4,7 @@ const powValidator = require("../crypto/powValidator");
 class Block {
     constructor(data, prevHash, difficulty, blockDepth) {
         this.blockDepth = blockDepth
-        this.timestamp = Date.now()/1000; // unix timestamp in seconds 
+        this.timestamp = Math.floor(Date.now()/1000); // unix timestamp in seconds 
         this.nonce = 0
         this.data = data; // Block of transactions for block
         this.prevHash = prevHash; // hash of previous block

@@ -1,42 +1,43 @@
 const Block = require("./Block");
+const AirdropTx = require('./transactions/AirdropTx')
+const HonkBs58 = require('../crypto/HonkBs58')
 const fs = require('fs')
 
 class Blockchain {
-    constructor() {
+    constructor(owner) {
         this.difficulty = 2;
-        this.blockDepth = 0;
-        this.blockchain = [this.Genesis()]   
+        this.blockchain = [this.Genesis(owner)]   
     }
 
-    Genesis() {
-        return new Block(
-            {
-                "type" : "Genesis-token-transfer",
-                "amount": "100",
-                "from": "0x00000000000000000000000000000000000000",
-                "to" :  "0xAndziDev0g123ji418ss1324frtygs34fd1232",
-                "success" : true,
-            },
+    Genesis(owner) {
+        const ownerPubU8 = owner.account.keys.publicKey
+        const ownerPub = HonkBs58(ownerPubU8) 
+        const block = new Block(
+            new AirdropTx(ownerPub),
             "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d", //Solana genesis hash
             this.difficulty,
             0
         )
+        fs.writeFileSync('../chaindata.json', `${JSON.stringify(block)},\n`)
+        return block
     }
 
     addBlock(data){
+        const blockDepth = this.blockchain.length
         const block = new Block(
             data,
-            this.blockchain[ blockDepth - 1 ].prevHash,
+            this.blockchain[ blockDepth- 1 ].blockHash,
             this.difficulty,
             blockDepth
         )
         this.blockchain.push(block)
-        this.blockDepth += 1
-
-        //file = fs.writeFile('../blockchain.json', this.blockchain)
-
-        return false
+        fs.writeFileSync('../chaindata.json', `${JSON.stringify(block)},\n`,{flag: 'a+'})
+        return block
     } 
+
+    validate(){
+
+    }
 
 }
 

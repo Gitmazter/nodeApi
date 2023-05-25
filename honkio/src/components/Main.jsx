@@ -1,7 +1,15 @@
-export const Main= () => {
+import AirdropTx from "../honkCrypto/transactions/AirdropTx";
+import Signer from "../honkCrypto/Signer";
+import { HonkBs58 } from "../honkCrypto/crypto/HonkBs58";
+import axios from "axios";
 
-    const sendGet = async () => {
-        const res = await fetch('http://localhost:6969/honkRpc')
+
+export const Main= () => {
+    // ENV vars don't work in React until npm build is called and deployed
+    const RPC_URL = process.env.HONK_RPC_BASE_URL || "http://localhost:1234/honkRpc"
+
+    const sendPing = async () => {
+        const res = await fetch(RPC_URL)
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(err => { 
@@ -10,14 +18,19 @@ export const Main= () => {
     }
 
     const getHistory = async () => {
-        const res = await fetch('http://localhost:6969/honkRpc/history')
-        .then(response => response.json())
-        .then(data => console.log(data.data[0]))
-        .catch(err => console.log(err))
+        const start = 0
+        const end = Date.now()
+        console.log(start, end);
+        const res = await fetch(`${RPC_URL}/history/range/?start=${start}&end=${end}`)
+            .then(response => response.json())
+            .then(data => console.log(data))
+        .catch(err => { 
+            console.log(err);
+        })
     }
 
     const latestBlock = async () => {
-        const res = await fetch('http://localhost:6969/honkRpc/history/latest')
+        const res = await fetch(`${RPC_URL}/history/latest`)
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(err => { 
@@ -29,12 +42,39 @@ export const Main= () => {
         const start = 0
         const end = Date.now()
         console.log(start, end);
-        const res = await fetch(`http://localhost:6969/honkRpc/history/range/?start=${start}&end=${end}`)
+        const res = await fetch(`${RPC_URL}/history/range/?start=${start}&end=${end}`)
             .then(response => response.json())
             .then(data => console.log(data))
         .catch(err => { 
             console.log(err);
         })
+    }
+
+    const airdropTest = async () => {
+        const signer = new Signer()
+        const sender = HonkBs58(signer.account.keys.publicKey)
+        const txData = new AirdropTx(sender)
+        const signedTxData = signer.sign(txData)
+        const senderu8 = signer.account.keys.publicKey
+        try {
+            const res = await axios
+                .post(
+                    `${RPC_URL}/transact`,
+                    {
+                        "signedTransaction": JSON.stringify(signedTxData),
+                        "senderU8": JSON.stringify(senderu8)
+                    },
+                    {
+                        headers : {
+                            "Content-Type":"application/json"
+                        }
+                    })
+
+            console.log(res.data.data);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     return (
@@ -44,13 +84,13 @@ export const Main= () => {
             <h1>HONK!</h1>
             <button type="button" onClick={getHistory}>Get History</button>
             <button type="button" onClick={latestBlock}>Get Latest Block</button>
-            <button type="button" onClick={sendGet}>Ping</button>
+            <button type="button" onClick={sendPing}>Ping</button>
             <button type="button" onClick={getBlocksInRange}>Get Range</button>
+            <button type="button" onClick={airdropTest}>Test Airdrop</button>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis tempora ut sit nobis eveniet, voluptatum nesciunt neque ipsam vel consectetur placeat! Omnis expedita hic minima veritatis vitae cum eveniet voluptas.
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus molestiae ad eius harum temporibus enim sequi eum! Ad vitae, deserunt consectetur consequuntur placeat quidem a? Ullam assumenda error repellat corporis.
                 Lorem ipsdsadu   dolor sit amet consectetur adipisicing elit. Id doloremque unde placeat eaque in natus officia quam ex pariatur voluptatum tempora voluptatem, illo laboriosam rerum officiis! Autem accusantium ex enim!
-            
             </p>
         </main>
     )

@@ -1,13 +1,12 @@
 class BurnTx {
-    constructor (sender, amount, tokenAddress) {
+    constructor (sender, signer, amount, tokenAddress) {
         this.type = "HONK-burn-asset"
         this.sender = sender;
         this.valsig = false // set as default until after checks
         this.instructions = {
-            from : sender,
+            from : this.sender,
             to : "0x000000000000000000000000000000000000000000",
-            tokenAddress : "Either GOOS or unique NFT hash",
-            amount : amount,
+            amount : this.amount,
             success: false // set as default until after checks
         }
     }

@@ -5,9 +5,12 @@ const AppError = require('./utils/AppError');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express()
+
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: '*',
+    'Access-Control-Allow-Origin': "*"
 }));
+
 app.use(express.json())
 app.use('/honkRpc', router)
 
@@ -22,7 +25,7 @@ app.all('*', (req, res, next) => {
 
 app.use(errorHandler);
 
-PORT = 6969;
+PORT = 1234;
 app.listen(
     PORT,
     console.log(`This server be honking on port: ${PORT} in DEV MODE`)
@@ -42,6 +45,8 @@ app.listen(
 // var string = new TextDecoder().decode(verifyTx);
 // var json = JSON.parse(string)
 // console.log(json)
+
+
 //const signer = new Signer()
 // signer.sign(txData)
 // Get whole blockchain history

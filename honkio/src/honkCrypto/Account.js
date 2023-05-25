@@ -1,12 +1,12 @@
+const HonkBs58 = require('../honkCrypto/crypto/HonkBs58')
 const nacl = require('tweetnacl')
-const HonkBs58 = require('../crypto/HonkBs58')
-const vanityAddressChecker = require('../crypto/vanityAddressChecker')
+const vanityAddressChecker = require('../honkCrypto/crypto/vanityAddressChecker')
 
 // Do this client side for security purposes
 class Account {
     constructor(keypair, vanityString) {
         if (keypair != undefined) {
-            this.keys = keypair
+            this.keys = keypair // object with 2 Uint8Arrays keys: secretKey (64bytes), publicKey (32bytes)
         }
         else if (vanityString != undefined ) {
             this.keys = this.grind(vanityString)

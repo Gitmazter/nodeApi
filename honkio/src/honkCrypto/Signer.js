@@ -1,5 +1,6 @@
 const Account = require('./Account');
 const nacl = require('tweetnacl')
+var Buffer = require('buffer/').Buffer
 
 class Signer {
     constructor(keypair, vanityString){ // if keypair supplied, create signer from keypair
@@ -17,15 +18,6 @@ class Signer {
         const signedTx = nacl.sign(u8Msg, secretKey )
 
         return signedTx
-    }
-    validate(signedMessage, senderU8) {
-        const verifyTx = nacl.sign.open(signedMessage, senderU8)
-        if (verifyTx != null) {
-            var string = new TextDecoder().decode(verifyTx);
-            var json = JSON.parse(string)
-            return json
-        }
-        else return null
     }
 
 
