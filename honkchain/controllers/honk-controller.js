@@ -4,7 +4,7 @@ const json2Uint8 = require('../txValidation/json2uint8');
 const Signer = require('../crypto/blockchain/Signer');
 const AppError = require('../utils/AppError');
 
-const { OWNER_PRIVATEKEY } = require('../env'); // env.js to save codelines
+const { OWNER_PRIVATEKEY } = require('../settings'); // env.js to save codelines
 const ownerSigner = new Signer(OWNER_PRIVATEKEY, null);
 const blockchain = new Blockchain(ownerSigner);
 

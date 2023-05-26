@@ -1,10 +1,8 @@
 const {
-
     validateTransact, 
     validateAirdrop, 
     validateBurn, 
     validateNft
-
 } = require('./ValidateTxs');
 
 const validateTxData = (data) => {

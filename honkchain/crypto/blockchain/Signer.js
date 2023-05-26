@@ -18,6 +18,7 @@ class Signer {
 
         return signedTx;
     };
+    
     validate(signedMessage, senderU8) {
         const verifyTx = nacl.sign.open(signedMessage, senderU8);
         if (verifyTx != null) {

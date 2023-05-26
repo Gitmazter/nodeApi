@@ -1,8 +1,11 @@
 const errorHandler = require('./middleware/errorHandler');
 const router = require('./routes/honk-routes');
 const AppError = require('./utils/AppError');
+const dotenv = require('dotenv')
+dotenv.config('./.env')
 const express = require('express');
 const cors = require('cors');
+
 
 const app = express();
 app.use(cors({

@@ -6,7 +6,19 @@ const fs = require('fs');
 class Blockchain {
     constructor(owner) {
         this.difficulty = 2;
-        this.blockchain = [this.Genesis(owner)];  
+        this.blockchain = [this.start(owner)];  
+    }
+
+    start (owner) {
+        const chainJson = fs.readFileSync('../chaindata.json');
+        try {
+            const chain = JSON.parse(chainJson)
+            // validate chain here -- If invalid, .. do something ..
+            return chain.honkchain.blockchain;
+        }
+        catch (e) {
+            return this.Genesis(owner)
+        }
     }
 
     Genesis(owner) {
@@ -18,7 +30,9 @@ class Blockchain {
             this.difficulty,
             0
         );
-        fs.writeFileSync('../chaindata.json', `${JSON.stringify(block)}\n`);
+        fs.writeFileSync(
+            '../chaindata.json',
+            JSON.stringify({honkchain : [block]}));
         return block;
     } 
 
@@ -31,7 +45,9 @@ class Blockchain {
             blockDepth
         );
         this.blockchain.push(block);
-        fs.writeFileSync('../chaindata.json', `${JSON.stringify(this)}\n`);
+        fs.writeFileSync(
+            '../chaindata.json'
+            , JSON.stringify({honkchain : [this.blockchain]}));
         console.log(block);
         return block;
     };
