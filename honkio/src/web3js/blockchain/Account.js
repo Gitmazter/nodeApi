@@ -6,6 +6,7 @@ const nacl = require('tweetnacl');
 class Account {
     constructor(secretKey, vanityString) {
         if (secretKey != undefined) {
+            console.log(secretKey);
             this.keys = nacl.sign.keyPair.fromSecretKey(secretKey);
         }
         else if (vanityString != undefined ) {

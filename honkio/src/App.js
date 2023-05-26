@@ -1,29 +1,25 @@
+import { useState } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Main } from './components/Main';
+import { WalletContext } from './contexts/WalletContext';
 import './styles/App.css';
 
-function App() {
+function App() {  
+  const [wallet, setWallet] = useState();
 
-  /* 
-  Pages
-  Home
-  Explorer
-  Account Dashboard
-  Mint NFT
-  Whitepaper
-      Usecase : HONK
-      Roadmap : Stage1 Honk, stage 2; double honk
-      Coin: $GOOS GooseCoin
-      Future Predictions? : Honks (arrow up)
-  */
+  function saveWallet (signer) {
+    setWallet(signer)
+  }
 
   return (
-    <div className="App">
-      <Header/>
-      <Main/>
-      <Footer/>
-    </div>
+    <WalletContext.Provider value={{ wallet, saveWallet }}>
+      <div className="App">
+        <Header/>
+        <Main />
+        <Footer/>
+      </div>
+    </WalletContext.Provider>
   );
 }
 

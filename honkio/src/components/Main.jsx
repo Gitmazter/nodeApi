@@ -1,12 +1,16 @@
 import AirdropTx from "../honkCrypto/transactions/AirdropTx";
-import Signer from "../honkCrypto/Signer";
-import { HonkBs58 } from "../honkCrypto/crypto/HonkBs58";
+import Signer from "../web3js/blockchain/Signer"
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { WalletContext } from "../contexts/WalletContext";
+import { HonkU8Arr, HonkBs58 } from "../web3js/HonkBs58";
+import { SetDisplayWallet } from "./SetDisplayWallet";
 
 
 export const Main= () => {
-     const [responseText, setResponseText] = useState("_")
+    const {wallet , saveWallet} = useContext(WalletContext)
+
+    const [interfaceDisplay, setInterfaceDisplay] = useState("_")
     // ENV vars don't work in React until npm build is called and deployed
     const RPC_URL = process.env.HONK_RPC_BASE_URL || "http://localhost:1235/honkRpc"
     const signer = new Signer()
@@ -14,15 +18,20 @@ export const Main= () => {
     const sendPing = async () => {
         const res = await fetch(RPC_URL)
             .then(response => response.json())
-            .then(data => setResponseText(pingResponse(data)))
+            .then(data => setInterfaceDisplay(pingResponse(data)))
             .catch(err => { 
                 console.log(err);
         })
     }
 
     useEffect(() => {
+        console.log(wallet);
+    }, [interfaceDisplay, wallet])
 
-    }, [responseText])
+    const walletConnect = async () => {
+        setInterfaceDisplay(SetDisplayWallet(wallet, saveWallet))
+        
+    }
 
     const getHistory = async () => {
         const start = 0
@@ -30,7 +39,7 @@ export const Main= () => {
         console.log(start, end);
         const res = await fetch(`${RPC_URL}/history/range/?start=${start}&end=${end}`)
             .then(response => response.json())
-            .then(data => setResponseText(unfoldBlocks(data.data)))
+            .then(data => setInterfaceDisplay(unfoldBlocks(data.data)))
         .catch(err => { 
             console.log(err);
         })
@@ -41,7 +50,7 @@ export const Main= () => {
             .then(response => response.json())
             .then(data => {
                 //console.log(data.data.blockHash);
-                setResponseText(unfoldBlock(data.data))
+                setInterfaceDisplay(unfoldBlock(data.data))
             })
             .catch(err => { 
                 console.log(err);
@@ -54,7 +63,7 @@ export const Main= () => {
         console.log(start, end);
         const res = await fetch(`${RPC_URL}/history/range/?start=${start}&end=${end}`)
             .then(response => response.json())
-            .then(data =>  setResponseText(unfoldBlocks(data.data)))
+            .then(data =>  setInterfaceDisplay(unfoldBlocks(data.data)))
         .catch(err => { 
             console.log(err);
         })
@@ -91,7 +100,7 @@ export const Main= () => {
             <h1>HONK.IO</h1>
             <section id="chainInterface">
                 <div id="interactionButtons">
-                    <button type="button" id="walletBtn">Create/Connect Wallet</button>
+                    <button type="button" onClick={walletConnect} id="walletBtn">Create/Connect Wallet</button>
                     <button type="button" /* onClick={getAccountHistory} */>Get Wallet Balances</button>
                     <button type="button" /* onClick={getAccountHistory} */>Get Wallet Transactions</button>
                     <button type="button" onClick={sendPing}>Ping RPC endpoint</button>
@@ -104,7 +113,7 @@ export const Main= () => {
                     <button type="button" /* onClick={burnTest} */>Test Burn</button>
                 </div>
                 <div id="responseDisplay">
-                {responseText}
+                {interfaceDisplay}
                 </div>
             </section>
         </main>
