@@ -16,13 +16,16 @@ class Blockchain {
 
         let chainObj
         try {chainObj = JSON.parse(chainJson);}
-        catch (error) {return this.Genesis(owner);}
+        catch (error) {
+            console.log('no chain present, starting new Honk Chain');
+            return this.Genesis(owner);
+        }
 
         const isChainValid = this.validate(chainObj.honkchain);
         console.log(`Is chain valid? : ${true}`);
         
         if (isChainValid == true) {return chainObj.honkchain;}
-        throw error("This chain has been tampered with please restart node from latest snapshot!") 
+        throw error("This chain is invalid with please rollback Honk Node to latest snapshot!") 
     };
 
     validate (chain) {
