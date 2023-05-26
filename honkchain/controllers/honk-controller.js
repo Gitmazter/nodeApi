@@ -38,7 +38,7 @@ exports.transaction = ( async (req, res) => {
 exports.welcome = ((req, res) => {
     response.status = 'Success';
     response.statusCode = 200;
-    response.data = 'HONK!';
+    response.data = 'Proof of HONK!';
     res.status(response.statusCode).json(response);
 })
 

@@ -1,7 +1,7 @@
 const AirdropTx = require('./transactions/AirdropTx');
 const createHash = require('../create256hash');
+const { log, error } = require('console');
 const HonkBs58 = require('../HonkBs58');
-const { log, error } = require('console'); // IDK why logging doesn't work in this file without import
 const Block = require("./Block");
 const fs = require('fs');
 
@@ -19,13 +19,13 @@ class Blockchain {
         catch (error) {
             console.log('no chain present, starting new Honk Chain');
             return this.Genesis(owner);
-        }
+        } 
 
         const isChainValid = this.validate(chainObj.honkchain);
         console.log(`Is chain valid? : ${true}`);
         
         if (isChainValid == true) {return chainObj.honkchain;}
-        throw error("This chain is invalid with please rollback Honk Node to latest snapshot!") 
+        else {throw error("This chain is invalid with please rollback Honk Node to latest valid snapshot")}
     };
 
     validate (chain) {
