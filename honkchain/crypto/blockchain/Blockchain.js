@@ -1,5 +1,7 @@
 const AirdropTx = require('./transactions/AirdropTx');
+const createHash = require('../create256hash');
 const HonkBs58 = require('../HonkBs58');
+const { log, error } = require('console'); // IDK why logging doesn't work in this file without import
 const Block = require("./Block");
 const fs = require('fs');
 
@@ -7,19 +9,36 @@ class Blockchain {
     constructor(owner) {
         this.difficulty = 2;
         this.blockchain = [this.start(owner)];  
-    }
+    };
 
-    start (owner) {
-        const chainJson = fs.readFileSync('../chaindata.json');
-        try {
-            const chain = JSON.parse(chainJson)
-            // validate chain here -- If invalid, .. do something ..
-            return chain.honkchain.blockchain;
-        }
-        catch (e) {
-            return this.Genesis(owner)
-        }
-    }
+    start(owner) {
+        let chainJson = fs.readFileSync('../chaindata.json');
+
+        let chainObj
+        try {chainObj = JSON.parse(chainJson);}
+        catch (error) {return this.Genesis(owner);}
+
+        const isChainValid = this.validate(chainObj.honkchain);
+        console.log(`Is chain valid? : ${true}`);
+        
+        if (isChainValid == true) {return chainObj.honkchain;}
+        throw error("This chain has been tampered with please restart node from latest snapshot!") 
+    };
+
+    validate (chain) {
+        console.log('validating chain');
+        if (chain.length > 1) { 
+            for (let i = 0; i < chain.length -1; i++) {
+                const block = chain[i];
+                const hash = createHash(block.timestamp, block.data, block.prevHash, block.nonce);
+                if (chain[i + 1].prevHash != hash) {
+                    return false;
+                };
+            };
+            return true;
+        };
+        return true;
+    };
 
     Genesis(owner) {
         const ownerPubU8 = owner.account.keys.publicKey;
@@ -34,7 +53,7 @@ class Blockchain {
             '../chaindata.json',
             JSON.stringify({honkchain : [block]}));
         return block;
-    } 
+    } ;
 
     addBlock(data){
         const blockDepth = this.blockchain.length;
@@ -47,13 +66,9 @@ class Blockchain {
         this.blockchain.push(block);
         fs.writeFileSync(
             '../chaindata.json'
-            , JSON.stringify({honkchain : [this.blockchain]}));
+            , JSON.stringify({honkchain : this.blockchain}));
         console.log(block);
         return block;
-    };
-
-    validateChain(){
-
     };
 
 };

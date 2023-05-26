@@ -19,8 +19,8 @@ class Block {
             hash = createHash(timestamp, data, prevHash, nonce);
         } 
         this.nonce = nonce;
-        return hash;
+        return hash
     }
 }
 
-module.exports = Block;
+module.exports = Block

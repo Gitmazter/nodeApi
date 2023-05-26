@@ -80,8 +80,6 @@ export const Main= () => {
     return (
         <main>
             <h1>HONK!</h1>
-            <h1>HONK!</h1>
-            <h1>HONK!</h1>
             <button type="button" onClick={getHistory}>Get History</button>
             <button type="button" onClick={latestBlock}>Get Latest Block</button>
             <button type="button" onClick={sendPing}>Ping</button>

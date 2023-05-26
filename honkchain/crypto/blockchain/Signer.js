@@ -29,7 +29,6 @@ class Signer {
         else return null;
     };
 
-
     decodeArr (binArray) {
         var str = "";
         for (var i = 0; i < binArray.length; i++) {
