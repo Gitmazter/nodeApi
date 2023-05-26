@@ -6,7 +6,7 @@ import axios from "axios";
 
 export const Main= () => {
     // ENV vars don't work in React until npm build is called and deployed
-    const RPC_URL = process.env.HONK_RPC_BASE_URL || "http://localhost:1234/honkRpc"
+    const RPC_URL = process.env.HONK_RPC_BASE_URL || "http://localhost:1235/honkRpc"
     const signer = new Signer()
 
     const sendPing = async () => {

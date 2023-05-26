@@ -1,19 +1,19 @@
 const powValidator = (hash, difficulty) => { // Proof of HONK
-    let valid = true
+    let valid = true;
 
-    const obSlice = hash.slice(0,2)
+    const obSlice = hash.slice(0,2);
     if (obSlice != "0a") {
-        valid = false
-    }
+        valid = false;
+    };
 
-    const zSlice = hash.slice(2, difficulty+2)
+    const zSlice = hash.slice(2, difficulty+2);
     for (var c in zSlice) {
         if (zSlice[c] != "0") {
-            valid = false
-        }
-    }
+            valid = false;
+        };
+    };
 
-    return valid
-}
+    return valid;
+};
 
-module.exports =  powValidator
+module.exports =  powValidator;

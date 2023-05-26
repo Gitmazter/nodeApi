@@ -5,6 +5,6 @@ const OWNER_PRIVATEKEY = Uint8Array.from([ // Left unignored on purpose for now
     151, 193,  80, 254,  78, 215, 238, 106, 199,  34,  33,
     253,  63, 104, 192,  66, 230, 147, 235, 128, 143,  49,
      79, 146, 195, 151,   4, 100, 230, 103,  94
-])
+]);
 
-module.exports = { OWNER_PRIVATEKEY }
+module.exports = { OWNER_PRIVATEKEY };

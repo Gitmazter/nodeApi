@@ -1,6 +1,6 @@
+const bodyParser = require('body-parser').json();
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser').json()
 
 const {
     welcome,
@@ -18,16 +18,16 @@ router
 
 router
   .route('/history/latest')
-  .get(latestBlock)
+  .get(latestBlock);
 
 router
   .route('/history/:address')
-  .get(/* Account History */)
+  .get(/* Account History */);
 
 router 
   .route('/history/range')
-  .get(getBlocksInRange)
+  .get(getBlocksInRange);
 
-router.route('/transact').post(bodyParser, transaction)
+router.route('/transact').post(bodyParser, transaction);
 
 module.exports = router;
