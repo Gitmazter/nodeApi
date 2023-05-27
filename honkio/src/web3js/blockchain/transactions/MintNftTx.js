@@ -1,7 +1,7 @@
 const generateNft = require('../../generateNft')
 
 class MintNftTx {
-    constructor (sender, signer) {
+    constructor (sender) {
         this.type = "HONK-mint-nft";
         this.sender = sender;
         this.valsig = false; // set as default until after checks

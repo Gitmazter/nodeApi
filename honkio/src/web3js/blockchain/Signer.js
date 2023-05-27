@@ -1,5 +1,6 @@
 const Account = require('./Account');
 const nacl = require('tweetnacl');
+var Buffer = require('buffer/').Buffer
 
 class Signer {
     constructor(secretKey, vanityString){ // if keypair supplied, create signer from keypair
