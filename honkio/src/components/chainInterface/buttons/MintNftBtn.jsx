@@ -1,9 +1,10 @@
 import axios from "axios"
 import { HonkBs58 } from "../../../web3js/HonkBs58"
-import { unfoldNftBlock } from "./unfoldBlocks"
+import { displayNft, unfoldNftBlock } from "./unfoldBlocks"
 import { WalletContext } from "../../../contexts/WalletContext"
 import { useContext } from "react"
 import MintNftTx from "../../../web3js/blockchain/transactions/MintNftTx"
+import generateNft from "../../../web3js/generateNft"
 
 export const MintNftBtn = ({ setInterfaceDisplay, RPC_URL }) => {
     
@@ -25,7 +26,7 @@ export const MintNftBtn = ({ setInterfaceDisplay, RPC_URL }) => {
                         {headers : {"Content-Type":"application/json"}}
                     )
             console.log(res.data.data);
-            //setInterfaceDisplay(unfoldNftBlock(res.data.data))
+            setInterfaceDisplay(displayNft(res.data.data))
         }
         catch (err) {
             console.log(err);
@@ -34,6 +35,6 @@ export const MintNftBtn = ({ setInterfaceDisplay, RPC_URL }) => {
 
 
     return (
-        <button type="button" onClick={sendTx}></button>
+        <button type="button" onClick={sendTx}>Mint Nft</button>
     )
 }

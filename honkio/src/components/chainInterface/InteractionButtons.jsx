@@ -6,6 +6,8 @@ import { GetLatestBtn } from "./buttons/GetLastestBtn"
 import { WalletBtn } from "./buttons/WalletBtn"
 import MintNftTx from "../../web3js/blockchain/transactions/MintNftTx"
 import { MintNftBtn } from "./buttons/MintNftBtn"
+import { BurnBtn } from "./buttons/BurnBtn"
+import { SendTxBtn } from "./buttons/SendTxBtn"
 
 export const InteractionButtons = ({ setInterfaceDisplay }) => {
 
@@ -23,8 +25,8 @@ export const InteractionButtons = ({ setInterfaceDisplay }) => {
             <GetRangeBtn setInterfaceDisplay={ setInterfaceDisplay } RPC_URL={ RPC_URL } />
             <AirdropBtn setInterfaceDisplay={ setInterfaceDisplay } RPC_URL={ RPC_URL} />
             <MintNftBtn setInterfaceDisplay={ setInterfaceDisplay } RPC_URL={ RPC_URL} />
-            <button type="button" /* onClick={txTest} */>Test Transact</button>
-            <button type="button" /* onClick={burnTest} */>Test Burn</button>
+            <SendTxBtn setInterfaceDisplay={ setInterfaceDisplay } RPC_URL={ RPC_URL } />
+            <BurnBtn setInterfaceDisplay={ setInterfaceDisplay } RPC_URL={ RPC_URL} />
         </div>
     )
 }

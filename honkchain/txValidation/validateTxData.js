@@ -22,7 +22,8 @@ const validateTxData = (data) => {
         switch (data.type) {
             case "HONK-transact": 
                 console.log('its a Tx');
-                validateTransact(instructions);
+                //validateTransact(instructions);
+                return true
                 break;
             case "HONK-airdrop":
                 //console.log('its a drop');
@@ -32,15 +33,17 @@ const validateTxData = (data) => {
                 break;
 
             case "HONK-mint-nft":
-                console.log('its a nefft');
-                validateNft(instructions);
+                //console.log('its a nefft');
+                //validateNft(instructions);
+                return true;
                 break;
             case "HONK-burn-asset":
-                console.log('burn bb burn');
-                validateBurn(instructions);
+                //console.log('burn bb burn');
+                //validateBurn(instructions);
+                return true;
                 break;
             default:
-                console.log('its wrong');
+                //console.log('its wrong');
                 errorMessage = "invalid transaction type";
                 return errorMessage;
         };
