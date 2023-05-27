@@ -6,27 +6,27 @@ import { showKeys } from "./buttons/WalletBtn";
 
 
 export const SetDisplayWallet = ({ setInterfaceDisplay }) => {
-    const { wallet, saveWallet } = useContext(WalletContext)
+    const { wallet, saveWallet } = useContext(WalletContext);
 
     const handleSubmitPrivate = (event) => {
-        event.preventDefault()
-        const privkey = event.target.privateKey.value
-        const privU8 = HonkU8Arr(privkey)
+        event.preventDefault();
+        const privkey = event.target.privateKey.value;
+        const privU8 = HonkU8Arr(privkey);
         if (privU8.length !== 64) {
             return
-        }
-        const signer = new Signer(privU8)
-        saveWallet(signer)
-        setInterfaceDisplay(showKeys(signer))
+        };
+        const signer = new Signer(privU8);
+        saveWallet(signer);
+        setInterfaceDisplay(showKeys(signer));
         return;
     }
 
     const handleSubmitNew = (event) => {
         console.log('creating wallet');
-        event.preventDefault()
-        const signer = new Signer(undefined, event.target.vanity.value)
-        saveWallet(signer)
-        setInterfaceDisplay(showKeys(signer))
+        event.preventDefault();
+        const signer = new Signer(undefined, event.target.vanity.value);
+        saveWallet(signer);
+        setInterfaceDisplay(showKeys(signer));
     }
 
     return (
@@ -47,5 +47,5 @@ export const SetDisplayWallet = ({ setInterfaceDisplay }) => {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};

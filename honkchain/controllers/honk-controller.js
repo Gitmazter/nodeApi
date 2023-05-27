@@ -4,7 +4,7 @@ const json2Uint8 = require('../txValidation/json2uint8');
 const Signer = require('../crypto/blockchain/Signer');
 const AppError = require('../utils/AppError');
 
-const { OWNER_PRIVATEKEY } = require('../settings'); // env.js to save codelines
+const { OWNER_PRIVATEKEY } = require('../settings');
 const generateNft = require('../crypto/generateNft');
 const ownerSigner = new Signer(OWNER_PRIVATEKEY, null);
 const blockchain = new Blockchain(ownerSigner);
@@ -88,18 +88,3 @@ function collectBlocksInRange (start, end) {
 function logData (data) {
     console.log(data);
 };
-// Get whole blockchain history
-// Get time range history
-// Get account history
-
-// Airdrop $GOOS || Send 100 $GOOS
-// Send $GOOS || Sends $GOOS to address
-// Buy Goose NFT || Mints Goose NFT with random goose image
-// Burn assets || Burnasds $Goos or $GOOS nft
-
-// Type : {
-// GOS-Airdrop < address > | Tx hash confirmation and new balance
-// GOS-Transact <receiver> <amount> | Tx hash confirmation and new balance
-// GOS-Mint-Nft <address> | Tx hash confirmation and new balance 
-// GOS-Asset-Burn <asset> <amount> | Tx hash confirmation and new balance 
-// }

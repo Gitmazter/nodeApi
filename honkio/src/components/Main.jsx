@@ -1,17 +1,17 @@
-import { useContext, useEffect, useState } from "react";
-import { WalletContext } from "../contexts/WalletContext";
+import { InteractionButtons } from "./chainInterface/InteractionButtons"; 
 import { SetDisplayWallet } from "./chainInterface/SetDisplayWallet";
-import { InteractionButtons } from "./chainInterface/InteractionButtons";
+import { WalletContext } from "../contexts/WalletContext";
+import { useContext, useEffect, useState } from "react";
 
 
 export const Main= () => {
-    const {wallet , saveWallet} = useContext(WalletContext)
+    const {wallet , saveWallet} = useContext(WalletContext);
 
-    const [interfaceDisplay, setInterfaceDisplay] = useState("_")
+    const [interfaceDisplay, setInterfaceDisplay] = useState("_");
 
     useEffect(() => {
         console.log(wallet);
-    }, [interfaceDisplay, wallet])
+    }, [interfaceDisplay, wallet]);
 
 
     return (
@@ -36,6 +36,6 @@ export const Main= () => {
                 </div>
             </section>
         </main>
-    )
-}
+    );
+};
 

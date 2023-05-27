@@ -1,5 +1,4 @@
 export function unfoldBlock(block) {
-    console.log(block);
     if (block.data.type === "HONK-mint-nft") {
         return unfoldNftBlock(block)
     }
