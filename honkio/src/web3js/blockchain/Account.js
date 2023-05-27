@@ -1,5 +1,5 @@
+const { HonkBs58 } = require('../HonkBs58');
 const vanityAddressChecker = require('../vanityAddressChecker');
-const HonkBs58 = require('../HonkBs58');
 const nacl = require('tweetnacl');
 
 // Do this client side for security purposes

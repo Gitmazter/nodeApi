@@ -5,6 +5,7 @@ const Signer = require('../crypto/blockchain/Signer');
 const AppError = require('../utils/AppError');
 
 const { OWNER_PRIVATEKEY } = require('../settings'); // env.js to save codelines
+const generateNft = require('../crypto/generateNft');
 const ownerSigner = new Signer(OWNER_PRIVATEKEY, null);
 const blockchain = new Blockchain(ownerSigner);
 
@@ -25,8 +26,11 @@ exports.transaction = ( async (req, res) => {
     txData.valsig = true;
     const isDataValid = validateData(txData);
     if (isDataValid !== true) throw new AppError(`Transaction Invalid! Reason: ${isDataValid}`, 402);
+    if (txData.type === "HONK-mint-nft") {txData.instructions.token = await generateNft()}
+    console.log(await txData.instructions.token);
     txData.instructions.success = true;
     const block = blockchain.addBlock(txData);
+    console.log(block);
 
 
     response.status = 'Transaction Successful!';

@@ -13,4 +13,4 @@ class TransactTx {
     };
 };
 
-module.exports = SendTokenTx;
+module.exports = TransactTx;

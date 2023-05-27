@@ -7,5 +7,4 @@ function HonkU8Arr (bs58key) {
     return bs58.decode(bs58key)
 }
 
-
 module.exports = { HonkBs58, HonkU8Arr };

@@ -23,9 +23,20 @@ body main {
   height: -moz-max-content;
   height: max-content;
 }
+body main input {
+  height: 90px;
+  width: 300px;
+  font-size: 40px;
+}
+body main .keyInput {
+  min-width: 600px;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  font-size: 20px;
+}
 body main h1 {
   font-family: "Times New Roman", Times, serif;
-  font-size: 25em;
+  font-size: 15em;
 }
 body main p {
   font-family: monospace;
@@ -56,6 +67,12 @@ body main #chainInterface #responseDisplay {
   font-size: 30px;
   width: 100%;
   padding: 40px;
+}
+body main #chainInterface #responseDisplay button {
+  height: 90px;
+}
+body main #chainInterface #responseDisplay .nftImg {
+  height: 600px;
 }
 body .blockDiv {
   padding-bottom: 100px;

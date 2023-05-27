@@ -1,10 +1,11 @@
-const crypto = require('crypto');
+//const crypto = require('crypto');
+const { createHash } = require('crypto-browserify')
 
-const createHash = (...args) => {
+const create256Hash = (...args) => {
   // Skapa ett objekt ifrån nodes crypto bibliotek...
   // Ange algoritm(sha256)
   
-  const hash = crypto.createHash('sha256');
+  const hash = createHash('sha256');
   // Skapa en hash av våra inskickade argument...
   hash.update(args.sort().join(' '));
   // Beräkna värdet baserat på algoritm, inskickade argument och
@@ -12,4 +13,4 @@ const createHash = (...args) => {
   return hash.digest('hex');
 };
 
-module.exports = createHash;
+module.exports = create256Hash;

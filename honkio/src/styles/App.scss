@@ -23,9 +23,19 @@ body {
         margin-top: 100px;
         margin-bottom: 100px;
         height: max-content;
+        input {
+            height: 90px;
+            width: 300px;
+            font-size: 40px;
+        }
+        .keyInput {
+            min-width: 600px;
+            max-width: fit-content;
+            font-size: 20px;
+        }
         h1 {
             font-family:'Times New Roman', Times, serif;
-            font-size: 25em;
+            font-size: 15em;
         }
         p {
             font-family:monospace;
@@ -56,6 +66,12 @@ body {
                 font-size: 30px;
                 width: 100%;
                 padding: 40px;
+                button {
+                    height: 90px;
+                }
+                .nftImg {
+                    height: 600px;
+                }
             }
         }
     }

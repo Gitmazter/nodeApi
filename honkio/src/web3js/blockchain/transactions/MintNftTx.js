@@ -1,14 +1,14 @@
-const generateNft = require('../../generateNft')
+const generateNft = require("../../generateNft");
 
 class MintNftTx {
-    constructor (sender, signer) {
+    constructor (sender) {
         this.type = "HONK-mint-nft";
         this.sender = sender;
         this.valsig = false; // set as default until after checks
         this.instructions = {
             from : "0x000000000000000000000000000000000000000000",
             to : this.sender,
-            token : generateNft(),
+            token : "",
             success: false // set as default until after checks
         };
     };
