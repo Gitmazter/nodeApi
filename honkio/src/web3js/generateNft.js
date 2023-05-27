@@ -1,8 +1,10 @@
-const axios = require('axios');
-const Nft = require('./blockchain/Nft')
+const Nft = require('./blockchain/Nft');
 
 const generateNft = async () => {
-    const duckData = await axios.get('https://random-d.uk/api/v2/random')
+    const duckData =
+    await fetch('https://random-d.uk/api/v2/quack')
+    .then(res => res.json())
+    .then(img => {return img});
 
     const title = "Your Honker!";
     const duckUrl = duckData.data.url;
@@ -13,4 +15,4 @@ const generateNft = async () => {
     return duck
 }
 
-module.exports = generateNft()
+module.exports = generateNft

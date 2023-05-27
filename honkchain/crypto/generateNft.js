@@ -13,4 +13,4 @@ const generateNft = async () => {
     return duck
 }
 
-module.exports = generateNft()
+module.exports = generateNft

@@ -34,7 +34,7 @@ export const SetDisplayWallet = ({ setInterfaceDisplay }) => {
             <div id="privKeyDiv">
                 <h2>Connect with Private Key</h2>
                 <form onSubmit={handleSubmitPrivate}>
-                    <input type="text" name="privateKey"></input>
+                    <input type="text" name="privateKey" className="keyInput"></input>
                     <button type="submit">Connect Wallet</button>
                 </form>
             </div>
@@ -42,7 +42,7 @@ export const SetDisplayWallet = ({ setInterfaceDisplay }) => {
                 <h2>Create New Wallet</h2>
                 <h4>Would you like your address to start with a *vanity string*? (Leave blank if not)</h4>
                 <form onSubmit={handleSubmitNew}>
-                    <input type="text" name="vanity"></input>
+                    <input type="text" length='3' name="vanity"></input>
                     <button type="submit">Create Wallet</button>
                 </form>
             </div>
