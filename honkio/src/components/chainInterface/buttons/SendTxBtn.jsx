@@ -36,7 +36,8 @@ export const SendTxBtn = ({ setInterfaceDisplay, RPC_URL, txType }) => {
             setInterfaceDisplay(unfoldBlock(res.data.data))
         }
         catch (err) {
-            console.log(err);
+            console.log(err.response.data.status);
+            setInterfaceDisplay(String(err.response.data.status))
         }
     }
 

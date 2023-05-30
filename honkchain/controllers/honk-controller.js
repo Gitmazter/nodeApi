@@ -6,10 +6,11 @@ const AppError = require('../utils/AppError');
 
 const { OWNER_PRIVATEKEY } = require('../settings');
 const generateNft = require('../crypto/generateNft');
+const catchErrorAsync = require('../utils/catchErrorAsync');
+
 const ownerSigner = new Signer(OWNER_PRIVATEKEY, null);
 const blockchain = new Blockchain(ownerSigner);
 
-//console.log(blockchain.blockchain);
 const response = {
     status: 'Not found',
     statusCode: 404,
@@ -17,29 +18,39 @@ const response = {
     error: null,
 };
 
-exports.transaction = ( async (req, res) => {
+exports.transaction = catchErrorAsync(async (req, res) => {
     const signedTransaction = json2Uint8(req.body.signedTransaction);
     const senderU8  = json2Uint8(req.body.senderU8);
-    const txData = ownerSigner.validate(signedTransaction, senderU8);
+    const txData = ownerSigner.validate(signedTransaction, senderU8);       
 
     if (txData == null) throw new AppError("Invalid Signature", 401);
     txData.valsig = true;
-    const isDataValid = validateData(txData);
-    if (isDataValid !== true) throw new AppError(`Transaction Invalid! Reason: ${isDataValid}`, 402);
-    if (txData.type === "HONK-mint-nft") {txData.instructions.token = await generateNft()}
-    console.log(await txData.instructions.token);
+
+    // Should do this browser side but:
+    // Doing this here since random-d.uk doesn't use CORS which disables browser connections 
+    // Could Break this out??
+    if (txData.type === "HONK-mint-nft"){
+        try {
+            txData.instructions.token = await generateNft()
+        }
+        catch (err) {
+            throw new AppError("NFT generation failed!", 501);
+        }
+    }
+
+    const validityReturn = validateData(txData, blockchain);
+    if (validityReturn !== true) throw new AppError(`Transaction Invalid! Reason: ${validityReturn}`, 401);
+
     txData.instructions.success = true;
     const block = blockchain.addBlock(txData);
-    console.log(block);
-
 
     response.status = 'Transaction Successful!';
     response.statusCode = 210;
     response.data = block;
     res.status(response.statusCode).json(response);
-})
+});
 
-exports.welcome = ((req, res) => {
+exports.welcome = catchErrorAsync((req, res) => {
     response.status = 'Success';
     response.statusCode = 200;
     response.data = 'Proof of HONK!';
@@ -47,44 +58,30 @@ exports.welcome = ((req, res) => {
 })
 
 exports.blockchainHistory = ((req, res) => {
-    const allBlocks = collectBlocksInRange(0, Date.now());
-    console.log(allBlocks.length);
+    const allBlocks = blockchain.returnBlocksInTimerange(0, Date.now())
     response.status = 'Success';
     response.statusCode = 201;
     response.data = allBlocks;
     res.status(response.statusCode).json(response);
 })
 
-exports.latestBlock = ((req, res) => {
+exports.getLatestBlock = ((req, res) => {
+    const latestBlock = blockchain.returnLatestBlock()
     response.status = 'Success';
     response.statusCode = 202;
-    const blockDepth = blockchain.blockchain.length;
-    response.data = blockchain.blockchain[blockDepth - 1];
+    response.data = latestBlock
     res.status(response.statusCode).json(response);
 })
 
-exports.getBlocksInRange = ((req,res) => {
+exports.getBlocksInRange = ((req, res) => {
     const start = req.query.start;
     const end = req.query.end;
-    console.log(start, end);
-    const blocksInRange = collectBlocksInRange(start, end);
+    const blocksInRange = blockchain.returnBlocksInTimerange(start, end);
+
     response.status = 'Success';
     response.statusCode = 203;
     response.data = blocksInRange;
     res.status(response.statusCode).json(response);
 });
 
-function collectBlocksInRange (start, end) {
-    const chain = blockchain.blockchain;
-    let blocksInRange = [];
-    for (let i in chain) {
-        if (chain[i].timestamp > start && chain[i].timestamp < end) {
-            blocksInRange.push(chain[i]);
-        };
-    };
-    return blocksInRange
-};
 
-function logData (data) {
-    console.log(data);
-};

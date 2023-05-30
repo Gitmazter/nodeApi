@@ -29,7 +29,7 @@ export const MintNftBtn = ({ setInterfaceDisplay, RPC_URL }) => {
             setInterfaceDisplay(displayNft(res.data.data))
         }
         catch (err) {
-            console.log(err);
+            setInterfaceDisplay(String(err.message))
         }
     }
 

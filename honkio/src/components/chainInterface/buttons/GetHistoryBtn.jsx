@@ -8,9 +8,12 @@ export const GetHistoryBtn = ({ setInterfaceDisplay, RPC_URL }) => {
         console.log(start, end);
         const res = await fetch(`${RPC_URL}/history/range/?start=${start}&end=${end}`)
             .then(response => response.json())
-            .then(data => setInterfaceDisplay(unfoldBlocks(data.data)))
+            .then(data => {
+                console.log(data);
+                setInterfaceDisplay(unfoldBlocks(data.data))
+            })
         .catch(err => { 
-            console.log(err);
+            setInterfaceDisplay(String(err.message));
         });
     };
 

@@ -5,11 +5,11 @@ const router = express.Router();
 const {
     welcome,
     blockchainHistory,
-    latestBlock,
+    getLatestBlock,
     getBlocksInRange,
     transaction
 } = require('../controllers/honk-controller');
-
+ 
 router.route('/').get(welcome);
 
 router
@@ -18,7 +18,7 @@ router
 
 router
   .route('/history/latest')
-  .get(latestBlock);
+  .get(getLatestBlock);
 
 router
   .route('/history/:address')

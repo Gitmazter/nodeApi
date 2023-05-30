@@ -5,7 +5,7 @@ const {
     validateNft
 } = require('./ValidateTxs');
 
-const validateTxData = (data) => {
+const validateTxData = (data, blockchain) => {
     //console.log(data);
     let errorMessage = "";
     let instructions;
@@ -19,33 +19,30 @@ const validateTxData = (data) => {
     };
 
     if(data.type != undefined) {
+        let valid
         switch (data.type) {
             case "HONK-transact": 
-                console.log('its a Tx');
-                //validateTransact(instructions);
-                return true
+                valid = validateTransact(instructions, data.sender, blockchain);
+                return valid
                 break;
+
             case "HONK-airdrop":
-                //console.log('its a drop');
-                const valid = validateAirdrop(instructions, data.sender);
-                if (valid !== true) {errorMessage = valid; return errorMessage};
+                valid = validateAirdrop(instructions, data.sender);
                 return valid;
                 break;
 
             case "HONK-mint-nft":
-                //console.log('its a nefft');
-                //validateNft(instructions);
-                return true;
+                valid = validateNft(instructions);
+                return valid
                 break;
+
             case "HONK-burn-asset":
-                //console.log('burn bb burn');
-                //validateBurn(instructions);
-                return true;
+                valid = validateBurn(instructions, data.sender, blockchain);
+                return valid
                 break;
+                
             default:
-                //console.log('its wrong');
-                errorMessage = "invalid transaction type";
-                return errorMessage;
+                return "invalid transaction type"
         };
     };
     return false;

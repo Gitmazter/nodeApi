@@ -6,14 +6,16 @@ dotenv.config('./.env')
 const express = require('express');
 const cors = require('cors');
 
-
 const app = express();
+
 app.use(cors({
     origin: '*',
     'Access-Control-Allow-Origin': "*"
 }));
+
 app.use('/honkRpc', router);
 app.use(express.json());
+app.use(errorHandler);
 
 
 app.all('*', (req, res, next) => {
@@ -28,6 +30,7 @@ app.all('*', (req, res, next) => {
 app.use(errorHandler);
 
 PORT = 1235;
+
 app.listen(
     PORT,
     console.log(`This server be honking on port: ${PORT} in DEV MODE`)

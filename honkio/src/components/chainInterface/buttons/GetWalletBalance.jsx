@@ -11,7 +11,14 @@ export const GetWalletBalance = ({ setInterfaceDisplay, RPC_URL}) => {
 
     const getData = async () => {
         const user = HonkBs58(wallet.account.keys.publicKey);
-        const chain = await axios.get(`${RPC_URL}/history/range/?start=${0}&end=${Date.now()}`);
+        let chain
+        try {
+            chain = await axios.get(`${RPC_URL}/history/range/?start=${0}&end=${Date.now()}`);
+        }
+        catch (err) {
+            setInterfaceDisplay(String(err.message))
+            return
+        }
         const userBlocks = filterUserBlocks(chain.data.data, user);
 
         setInterfaceDisplay(balancesDisplay(userBlocks, user))

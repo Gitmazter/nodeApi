@@ -22,12 +22,12 @@ class Blockchain {
         } 
 
         const isChainValid = this.validate(chainObj.honkchain);
-        console.log(`Is chain valid? : ${true}`);
+        console.log(`Is chain valid? : ${isChainValid}`);
         
-        if (isChainValid == true) {return chainObj.honkchain;}
+        if (isChainValid === true) {return chainObj.honkchain;}
         else {throw error("This chain is invalid with please rollback Honk Node to latest valid snapshot")}
     };
-
+ 
     validate (chain) {
         console.log('validating chain');
         if (chain.length > 1) { 
@@ -52,11 +52,12 @@ class Blockchain {
             this.difficulty,
             0
         );
+        
         fs.writeFileSync(
             '../chaindata.json',
-            JSON.stringify({honkchain : [block]}));
+            JSON.stringify({honkchain : block}));
         return block;
-    } ;
+    };
 
     addBlock(data){
         const blockDepth = this.blockchain.length;
@@ -74,7 +75,54 @@ class Blockchain {
         return block;
     };
 
-};
+    returnBlocksInTimerange(start, end) {
+        let chain = this.blockchain
+        console.log(chain);
+        let blocksInRange = [];
+        for (let i in chain) {
+            if (chain[i].timestamp > start && chain[i].timestamp < end) {
+                blocksInRange.push(chain[i]);
+            };
+        };
+        return blocksInRange
+    }
 
+    returnBlocksMatchingAddress (address) {
+        console.log('getting blocks');
+        const chain = this.blockchain
+        let matchingBlocks = []
+        for (let i in chain) {
+            const instructions = chain[i].data.instructions;
+            if (instructions.to === address || instructions.from === address)
+            matchingBlocks.push(chain[i])
+        };
+        console.log(matchingBlocks);
+        return matchingBlocks;
+    }
+
+    returnAddressGoosBalance(address) {
+        console.log("checking Balance");
+        const chain = this.blockchain
+        let addressBalance = 0
+        for (let i in chain) {
+            const instructions = chain[i].data.instructions;
+            if (instructions.to === address) {
+                addressBalance += instructions.amount
+            }
+            else if(instructions.from === address) {
+                addressBalance -= instructions.amount
+            }
+        };
+        console.log(addressBalance);
+        return addressBalance
+    }
+
+    returnLatestBlock () {
+        const length = this.blockchain.length - 1
+        const latestBlock = this.blockchain[length]
+        console.log(latestBlock);
+        return latestBlock
+    }
+};
 
 module.exports = Blockchain;

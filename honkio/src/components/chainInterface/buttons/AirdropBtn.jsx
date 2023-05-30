@@ -28,7 +28,7 @@ export const AirdropBtn = ({ setInterfaceDisplay, RPC_URL }) => {
             setInterfaceDisplay(unfoldBlock(res.data.data));
         }
         catch (err) {
-            console.log(err);
+            setInterfaceDisplay(String(err.message));
         };
     };
 

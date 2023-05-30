@@ -4,7 +4,7 @@ export const PingBtn = ({ setInterfaceDisplay, RPC_URL }) => {
         const res = await fetch(RPC_URL)
             .then(response => response.json())
             .then(data => setInterfaceDisplay(pingResponse(data)))
-            .catch(err => {console.log(err)});
+            .catch(err => {setInterfaceDisplay(String(err.message))});
     };
 
     return (
