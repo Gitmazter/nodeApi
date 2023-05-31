@@ -1,6 +1,6 @@
 const powValidator = require("./helpers/powValidator");
-const createHash = require("../create256hash");
 const { GENESIS_DATA } = require("../../settings");
+const createHash = require("../create256hash");
 
 class Block {
     constructor({ data, prevHash, difficulty, blockDepth }) {
