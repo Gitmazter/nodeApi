@@ -3,9 +3,11 @@ const generateNft = require('../crypto/blockchain/helpers/generateNft');
 const json2Uint8 = require('../crypto/txValidation/json2uint8');
 const Blockchain = require('../crypto/blockchain/Blockchain');
 const catchErrorAsync = require('../utils/catchErrorAsync');
-const Signer = require('../crypto/blockchain/Signer');
+const Signer = require('../crypto/blockchain/Signer')
+const { OWNER_PRIVATEKEY } = require('../settings');
 const AppError = require('../utils/AppError');
 
+const ownerSigner = new Signer(OWNER_PRIVATEKEY, null);
 const blockchain = new Blockchain();
 
 const response = {
@@ -16,11 +18,11 @@ const response = {
 };
 
 exports.transaction = catchErrorAsync(async (req, res) => {
-
+    console.log('received tx');
     const signedTransaction = json2Uint8(req.body.signedTransaction);
     const senderU8  = json2Uint8(req.body.senderU8);
     const txData = ownerSigner.validate(signedTransaction, senderU8);       
-
+    console.log(txData);
     if (txData == null) throw new AppError("Invalid Signature", 401);
     txData.valsig = true;
 
@@ -35,10 +37,8 @@ exports.transaction = catchErrorAsync(async (req, res) => {
             throw new AppError("NFT generation failed!", 501);
         }
     }
-
     const validityReturn = validateData(txData, blockchain);
     if (validityReturn !== true) throw new AppError(`Transaction Invalid! Reason: ${validityReturn}`, 401);
-
     txData.instructions.success = true;
     const block = blockchain.addBlock(txData);
 

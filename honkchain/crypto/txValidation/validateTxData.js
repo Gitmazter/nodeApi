@@ -6,7 +6,7 @@ const {
 } = require('./ValidateTxs');
 
 const validateTxData = (data, blockchain) => {
-    //////console.log(data);
+    console.log(data);
     let errorMessage = "";
     let instructions;
 

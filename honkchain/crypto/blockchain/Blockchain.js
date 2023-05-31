@@ -1,5 +1,5 @@
 const createHash = require('../create256hash');
-const { error } = require('//console');
+const { error } = require('console');
 const Block = require("./Block");
 const fs = require('fs');
 
@@ -18,18 +18,17 @@ class Blockchain {
             chainObj = JSON.parse(chainData)
         }
         catch (error) {
-            //console.log('no chain present, starting new Honk Chain');
-            this.Genesis()
-            return
+            console.log('no chain present, starting new Honk Chain');
+            return this.Genesis()
         }  
         const isChainValid = this.validate(chainObj);
-        //console.log(`Is chain valid? : ${isChainValid}`);
+        console.log(`Is chain valid? : ${isChainValid}`);
         if (isChainValid === true) {return chainObj;}
         else {throw error("This chain is invalid with please rollback Honk Node to latest valid snapshot")}
     };
  
     validate (chain) {
-        //console.log('validating chain');
+        console.log('validating chain');
         if (chain.length > 1) { 
             for (let i = 0; i < chain.length -1; i++) {
                 const block = chain[i];
@@ -44,16 +43,16 @@ class Blockchain {
     };
 
     Genesis() {
-        const GENESIS_BLOCK = [Block.Genesis()]
+        const GENESIS_BLOCK = Block.Genesis()
         fs.writeFileSync(
             '../chaindata.json',
             JSON.stringify(GENESIS_BLOCK))
-        return [GENESIS_BLOCK];
+        return [GENESIS_BLOCK]
     };
 
     addBlock(data){
         const blockDepth = this.blockchain.length
-        //console.log('adding block');
+        console.log('adding block');
         const block = new Block({
             data : data,
             prevHash : this.blockchain[blockDepth - 1].blockHash,
