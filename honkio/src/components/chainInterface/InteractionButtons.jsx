@@ -9,10 +9,12 @@ import { BurnBtn } from "./buttons/BurnBtn"
 import { SendTxBtn } from "./buttons/SendTxBtn"
 import { GetWalletTxs } from "./buttons/GetWalletTxs"
 import { GetWalletBalance } from "./buttons/GetWalletBalance"
+import { RPC_URL } from "../../services/config";
 
 export const InteractionButtons = ({ setInterfaceDisplay }) => {
 
-    const RPC_URL = process.env.HONK_RPC_BASE_URL || "http://localhost:1235/honkRpc";
+    console.log(RPC_URL);
+    
 
     return (
         <div id="interactionButtons">

@@ -1,15 +1,18 @@
 export function unfoldBlock(block) {
-    if (block.data.type === "HONK-mint-nft") {
+    if (block.blockDepth === 0 ) {
+        return "genesis"
+    }
+    else if (block.data.type === "HONK-mint-nft") {
         return unfoldNftBlock(block)
     }
     else {
         return unfoldRegularBlock(block)
     }
-
 }
 
 
 export function unfoldRegularBlock(block){
+    console.log(block);
     // If type HONK-mint-nft // write special unfold response for "TOKEN" field using NFT object
     const dateTime = new Date(block.timestamp*1000)
     return (
@@ -39,6 +42,7 @@ export function unfoldRegularBlock(block){
 
 export function unfoldBlocks(blocks) {
     const html = blocks.map((block) => {
+        console.log(block);
         return (
             <div className="blockDiv">
                 {unfoldBlock(block)}
@@ -49,6 +53,7 @@ export function unfoldBlocks(blocks) {
 }
 
 export function unfoldNftBlock (block) {
+    console.log(block);
     const dateTime = new Date(block.timestamp*1000)
     return (
         <p> 

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { WalletContext } from "../../../contexts/WalletContext";
 import { SetDisplayWallet } from "../SetDisplayWallet";
-import { HonkBs58, HonkU8Arr } from "../../../web3js/HonkBs58";
+import { HonkBs58, HonkU8Arr } from "../../../honk-web3js/HonkBs58";
 
 export const WalletBtn = ({ setInterfaceDisplay }) => {
 

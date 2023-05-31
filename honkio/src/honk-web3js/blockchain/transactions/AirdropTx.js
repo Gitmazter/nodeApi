@@ -13,4 +13,4 @@ class AirdropTx {
     };
 };
 
-module.exports = AirdropTx;
+export default AirdropTx

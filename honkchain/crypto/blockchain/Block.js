@@ -1,14 +1,20 @@
-const powValidator = require("../powValidator");
+const powValidator = require("./helpers/powValidator");
 const createHash = require("../create256hash");
+const { GENESIS_DATA } = require("../../settings");
 
 class Block {
-    constructor(data, prevHash, difficulty, blockDepth) {
+    constructor({ data, prevHash, difficulty, blockDepth }) {
         this.blockDepth = blockDepth;
-        this.timestamp = Math.floor(Date.now()/1000); // unix timestamp in seconds 
+        this.timestamp = Date.now(); // unix timestamp in seconds 
         this.nonce = 0;
         this.data = data; // Block of transactions for block
         this.prevHash = prevHash; // hash of previous block
         this.blockHash = this.mineBlock(this.timestamp, data, prevHash, difficulty);
+    }
+
+    static Genesis() {
+        const block = new this (GENESIS_DATA)
+        return new this(GENESIS_DATA)
     }
 
     mineBlock (timestamp, data, prevHash, difficulty) {

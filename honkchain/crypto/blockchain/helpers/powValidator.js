@@ -1,8 +1,8 @@
 const powValidator = (hash, difficulty) => { // Proof of HONK
     let valid = true;
 
-    const obSlice = hash.slice(0,2);
-    if (obSlice != "0a") {
+    const oaSlice = hash.slice(0,2);
+    if (oaSlice != "0a") {
         valid = false;
     };
 

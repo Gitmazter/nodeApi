@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { HonkU8Arr, HonkBs58 } from "../../web3js/HonkBs58";
-import Signer from "../../web3js/blockchain/Signer"
+import { HonkU8Arr, HonkBs58 } from "../../honk-web3js/HonkBs58";
+import  Signer from "../../honk-web3js/blockchain/Signer"
 import { WalletContext } from "../../contexts/WalletContext";
 import { showKeys } from "./buttons/WalletBtn";
 

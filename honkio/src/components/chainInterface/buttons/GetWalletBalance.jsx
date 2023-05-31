@@ -1,9 +1,9 @@
 import { WalletContext } from "../../../contexts/WalletContext";
-import { HonkBs58 } from "../../../web3js/HonkBs58";
+import { HonkBs58 } from "../../../honk-web3js/HonkBs58";
 import { filterUserBlocks } from "./GetWalletTxs";
 import { useContext } from "react";
 import axios from 'axios';
-import { displayNft, unfoldBlock, unfoldBlocks } from "./unfoldBlocks";
+import { displayNft } from "./unfoldBlocks";
 
 export const GetWalletBalance = ({ setInterfaceDisplay, RPC_URL}) => {
 

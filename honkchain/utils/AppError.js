@@ -2,8 +2,8 @@ class AppError extends Error {
     constructor(message, statusCode) {
       super(message);
   
-      console.log('AppError', statusCode);
-      console.log('Stack', this.stack);
+      //console.log('AppError', statusCode);
+      //console.log('Stack', this.stack);
   
       switch (statusCode) {
         case 400:

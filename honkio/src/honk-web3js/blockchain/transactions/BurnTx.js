@@ -13,4 +13,4 @@ class BurnTx {
     };
 };
 
-module.exports = BurnTx;
+export default BurnTx

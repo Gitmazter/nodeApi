@@ -1,8 +1,8 @@
 
 const validateTransact = (instructions, sender, blockchain) => {
     const senderBalance = blockchain.returnAddressGoosBalance(sender)
-
-    console.log(senderBalance);
+    
+    //console.log(senderBalance);
     if (senderBalance < instructions.amount) {
         return ("Insufficient Balance") 
     } else {
@@ -11,7 +11,7 @@ const validateTransact = (instructions, sender, blockchain) => {
 };
 
 const validateAirdrop = (instructions, sender) => {
-    //console.log(instructions, sender);
+    ////console.log(instructions, sender);
     if(sender != instructions.to) {
         return false;
     };
@@ -30,9 +30,9 @@ const validateNft = (instructions) => {
 };
 
 const validateBurn = (instructions, sender, blockchain) => {
-    console.log(sender);
+    //console.log(sender);
     const senderBalance = blockchain.returnAddressGoosBalance(sender)
-    console.log(senderBalance);
+    //console.log(senderBalance);
     if (senderBalance - instructions.amount < 0) {
         return ("Insufficient Balance") 
     } else {

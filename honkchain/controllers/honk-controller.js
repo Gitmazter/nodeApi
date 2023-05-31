@@ -1,15 +1,12 @@
-const validateData = require('../txValidation/validateTxData');
+const validateData = require('../crypto/txValidation/validateTxData');
+const generateNft = require('../crypto/blockchain/helpers/generateNft');
+const json2Uint8 = require('../crypto/txValidation/json2uint8');
 const Blockchain = require('../crypto/blockchain/Blockchain');
-const json2Uint8 = require('../txValidation/json2uint8');
+const catchErrorAsync = require('../utils/catchErrorAsync');
 const Signer = require('../crypto/blockchain/Signer');
 const AppError = require('../utils/AppError');
 
-const { OWNER_PRIVATEKEY } = require('../settings');
-const generateNft = require('../crypto/generateNft');
-const catchErrorAsync = require('../utils/catchErrorAsync');
-
-const ownerSigner = new Signer(OWNER_PRIVATEKEY, null);
-const blockchain = new Blockchain(ownerSigner);
+const blockchain = new Blockchain();
 
 const response = {
     status: 'Not found',
@@ -19,6 +16,7 @@ const response = {
 };
 
 exports.transaction = catchErrorAsync(async (req, res) => {
+
     const signedTransaction = json2Uint8(req.body.signedTransaction);
     const senderU8  = json2Uint8(req.body.senderU8);
     const txData = ownerSigner.validate(signedTransaction, senderU8);       
@@ -26,7 +24,7 @@ exports.transaction = catchErrorAsync(async (req, res) => {
     if (txData == null) throw new AppError("Invalid Signature", 401);
     txData.valsig = true;
 
-    // Should do this browser side but:
+    // Should do this browser side where TX is created but:
     // Doing this here since random-d.uk doesn't use CORS which disables browser connections 
     // Could Break this out??
     if (txData.type === "HONK-mint-nft"){

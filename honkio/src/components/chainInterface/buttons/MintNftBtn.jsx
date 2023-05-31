@@ -1,10 +1,9 @@
 import axios from "axios"
-import { HonkBs58 } from "../../../web3js/HonkBs58"
+import { HonkBs58 } from "../../../honk-web3js/HonkBs58"
 import { displayNft, unfoldNftBlock } from "./unfoldBlocks"
 import { WalletContext } from "../../../contexts/WalletContext"
 import { useContext } from "react"
-import MintNftTx from "../../../web3js/blockchain/transactions/MintNftTx"
-import generateNft from "../../../web3js/generateNft"
+import MintNftTx from "../../../honk-web3js/blockchain/transactions/MintNftTx"
 
 export const MintNftBtn = ({ setInterfaceDisplay, RPC_URL }) => {
     
