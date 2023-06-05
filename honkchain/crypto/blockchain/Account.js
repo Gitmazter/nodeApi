@@ -1,4 +1,4 @@
-const vanityAddressChecker = require('../vanityAddressChecker');
+const vanityAddressChecker = require('./helpers/vanityAddressChecker');
 const HonkBs58 = require('../HonkBs58');
 const nacl = require('tweetnacl');
 

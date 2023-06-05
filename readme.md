@@ -20,15 +20,6 @@ För VG ska vedertagen god programmeringssed användas, det vill säga att appli
 
 
 
-Plan:::::
-
-The absolute state of memechain (come up with name later)
-
-Features? 
-Shibana?
-Coin?
-Callable Smart Contracts? 
-Actual onramp?
 
 
 

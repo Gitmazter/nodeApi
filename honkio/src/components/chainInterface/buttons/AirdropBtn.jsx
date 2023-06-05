@@ -1,6 +1,6 @@
-import AirdropTx from "../../../web3js/blockchain/transactions/AirdropTx" 
+import AirdropTx from "../../../honk-web3js/blockchain/transactions/AirdropTx" 
 import { WalletContext } from "../../../contexts/WalletContext"
-import { HonkBs58 } from "../../../web3js/HonkBs58"
+import { HonkBs58 } from "../../../honk-web3js/HonkBs58"
 import { unfoldBlock } from "./unfoldBlocks"
 import { useContext } from "react"
 import axios from "axios"
@@ -19,16 +19,16 @@ export const AirdropBtn = ({ setInterfaceDisplay, RPC_URL }) => {
                 .post(
                         `${RPC_URL}/transact`,
                         {
+                            headers : {"Content-Type":"application/json"},
                             "signedTransaction": JSON.stringify(signedTxData),
                             "senderU8": JSON.stringify(senderu8)
-                        },
-                        {headers : {"Content-Type":"application/json"}}
+                        }
                     );
 
             setInterfaceDisplay(unfoldBlock(res.data.data));
         }
         catch (err) {
-            console.log(err);
+            setInterfaceDisplay(String(err.message));
         };
     };
 

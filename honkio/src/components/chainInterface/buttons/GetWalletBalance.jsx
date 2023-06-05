@@ -1,9 +1,9 @@
 import { WalletContext } from "../../../contexts/WalletContext";
-import { HonkBs58 } from "../../../web3js/HonkBs58";
+import { HonkBs58 } from "../../../honk-web3js/HonkBs58";
 import { filterUserBlocks } from "./GetWalletTxs";
 import { useContext } from "react";
 import axios from 'axios';
-import { displayNft, unfoldBlock, unfoldBlocks } from "./unfoldBlocks";
+import { displayNft } from "./unfoldBlocks";
 
 export const GetWalletBalance = ({ setInterfaceDisplay, RPC_URL}) => {
 
@@ -11,7 +11,14 @@ export const GetWalletBalance = ({ setInterfaceDisplay, RPC_URL}) => {
 
     const getData = async () => {
         const user = HonkBs58(wallet.account.keys.publicKey);
-        const chain = await axios.get(`${RPC_URL}/history/range/?start=${0}&end=${Date.now()}`);
+        let chain
+        try {
+            chain = await axios.get(`${RPC_URL}/history/range/?start=${0}&end=${Date.now()}`);
+        }
+        catch (err) {
+            setInterfaceDisplay(String(err.message))
+            return
+        }
         const userBlocks = filterUserBlocks(chain.data.data, user);
 
         setInterfaceDisplay(balancesDisplay(userBlocks, user))

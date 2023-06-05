@@ -1,9 +1,9 @@
 import axios from "axios"
-import { HonkBs58 } from "../../../web3js/HonkBs58"
+import { HonkBs58 } from "../../../honk-web3js/HonkBs58"
 import { unfoldBlock } from "./unfoldBlocks"
 import { WalletContext } from "../../../contexts/WalletContext"
 import { useContext } from "react"
-import TransactTx from "../../../web3js/blockchain/transactions/TransactTx"
+import TransactTx from "../../../honk-web3js/blockchain/transactions/TransactTx"
 
 export const SendTxBtn = ({ setInterfaceDisplay, RPC_URL, txType }) => {
     
@@ -23,6 +23,7 @@ export const SendTxBtn = ({ setInterfaceDisplay, RPC_URL, txType }) => {
         const signedTxData = wallet.sign(txData)
         const senderu8 = wallet.account.keys.publicKey
         try {
+            console.log("posting");
             const res = await axios
                 .post(
                         `${RPC_URL}/transact`,
@@ -37,6 +38,7 @@ export const SendTxBtn = ({ setInterfaceDisplay, RPC_URL, txType }) => {
         }
         catch (err) {
             console.log(err);
+            setInterfaceDisplay(String(err))
         }
     }
 

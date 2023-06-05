@@ -1,19 +1,22 @@
 const errorHandler = require('./middleware/errorHandler');
 const router = require('./routes/honk-routes');
 const AppError = require('./utils/AppError');
-const dotenv = require('dotenv')
-dotenv.config('./.env')
 const express = require('express');
+const dotenv = require('dotenv')
 const cors = require('cors');
 
+dotenv.config({path:'./config/.env'});
 
 const app = express();
+
 app.use(cors({
     origin: '*',
     'Access-Control-Allow-Origin': "*"
 }));
+
 app.use('/honkRpc', router);
 app.use(express.json());
+app.use(errorHandler);
 
 
 app.all('*', (req, res, next) => {
@@ -27,9 +30,10 @@ app.all('*', (req, res, next) => {
 
 app.use(errorHandler);
 
-PORT = 1235;
+PORT = process.env.PORT;
+
 app.listen(
     PORT,
-    console.log(`This server be honking on port: ${PORT} in DEV MODE`)
+    //console.log(`This server be honking on port: ${PORT} in DEV MODE`)
 );
  

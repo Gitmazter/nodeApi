@@ -14,4 +14,4 @@ class MintNftTx {
     };
 };
 
-module.exports = MintNftTx;
+export default MintNftTx

@@ -8,11 +8,11 @@ export const GetLatestBtn = ({ setInterfaceDisplay, RPC_URL }) => {
         const res = await fetch(`${RPC_URL}/history/latest`)
             .then(response => response.json())
             .then(data => {
-                //console.log(data.data.blockHash);
+                console.log(data);
                 setInterfaceDisplay(unfoldBlock(data.data))
             })
             .catch(err => { 
-                console.log(err);
+                setInterfaceDisplay(String(err.message));
         })
     }
 

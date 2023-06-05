@@ -1,5 +1,5 @@
 import { WalletContext } from "../../../contexts/WalletContext";
-import { HonkBs58 } from "../../../web3js/HonkBs58";
+import { HonkBs58 } from "../../../honk-web3js/HonkBs58";
 import { unfoldBlocks } from "./unfoldBlocks";
 import { useContext } from "react";
 import axios from 'axios';
@@ -9,7 +9,14 @@ export const GetWalletTxs = ({ setInterfaceDisplay, RPC_URL}) => {
 
     const getData = async () => {
         const user = HonkBs58(wallet.account.keys.publicKey);
-        const chain = await axios.get(`${RPC_URL}/history/range/?start=${0}&end=${Date.now()}`);
+        let chain
+        try {
+            chain = await axios.get(`${RPC_URL}/history/range/?start=${0}&end=${Date.now()}`);
+        }
+        catch(err) {
+            setInterfaceDisplay(String(err.message))
+            return
+        }
         const userBlocks = filterUserBlocks(chain.data.data, user);
         setInterfaceDisplay(unfoldBlocks(userBlocks))  
     };
@@ -20,8 +27,11 @@ export const GetWalletTxs = ({ setInterfaceDisplay, RPC_URL}) => {
 };
 
 export function filterUserBlocks (chain, user) {
+    console.log(chain);
     const filterBlocks = chain.filter(block => {
-        return (block.data.instructions.to === user || block.data.instructions.from === user )
+        if (block.blockDepth !== 0) {
+            return (block.data.instructions.to === user || block.data.instructions.from === user )
+        }
     });
     return filterBlocks
 };

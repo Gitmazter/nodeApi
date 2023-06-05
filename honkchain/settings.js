@@ -1,4 +1,9 @@
-
+const GENESIS_DATA = {
+    "data" : {"GENESIS" : "block"},
+    "prevHash" : "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
+    "difficulty" : 2,
+    "blockDepth" : 0
+}
 
 const OWNER_PRIVATEKEY = Uint8Array.from([ // Left unignored on purpose for now
     241, 140, 105,  89, 145,   1,  86, 137, 152, 232, 124,
@@ -9,4 +14,5 @@ const OWNER_PRIVATEKEY = Uint8Array.from([ // Left unignored on purpose for now
      79, 146, 195, 151,   4, 100, 230, 103,  94
 ]);
 
-module.exports = { OWNER_PRIVATEKEY };
+
+module.exports = { GENESIS_DATA, OWNER_PRIVATEKEY};

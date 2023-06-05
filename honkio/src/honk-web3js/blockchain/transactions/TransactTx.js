@@ -13,4 +13,4 @@ class TransactTx {
     };
 };
 
-module.exports = TransactTx;
+export default TransactTx
