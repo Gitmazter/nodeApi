@@ -53,6 +53,9 @@ class Blockchain {
     addBlock(data){
         const blockDepth = this.blockchain.length
         console.log('adding block');
+        if (data === undefined) {
+            return false;
+        }
         const block = new Block({
             data : data,
             prevHash : this.blockchain[blockDepth - 1].blockHash,
