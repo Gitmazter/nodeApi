@@ -34,6 +34,6 @@ PORT = process.env.PORT;
 
 app.listen(
     PORT,
-    //console.log(`This server be honking on port: ${PORT} in DEV MODE`)
+    console.log(`This server be honking on port: ${PORT} in DEV MODE`)
 );
  
