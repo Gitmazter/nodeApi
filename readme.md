@@ -5,12 +5,12 @@ Then start the web interface in /honkIo
 
 If nothing has broken since I submitted the project you should be able to:
 
-Create an account or Load your own wallet from private key
-Search the block explorer
-Airdrop honk tokens
-Send and receive honk tokens
-Mint an NFT
-Burn Tokens 
-Burn NFT
+<li>Create an account or Load your own wallet from private key</li>
+<li>Search the block explorer</li>
+<li>Airdrop honk tokens</li>
+<li>Send and receive honk tokens</li>
+<li>Mint an NFT</li>
+<li>Burn Tokens</li>
+<li>Burn NFT</li>
 
 Chain persists between server restarts and validates itself when loading 
