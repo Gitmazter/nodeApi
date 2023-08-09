@@ -1,7 +1,10 @@
 This is a nodeJS blockchain that i built as a school assignment.
 
 To use it, run the server in /honkchain locally
+`.../nodeApi/honkchain: node server.js`
+
 Then start the web interface in /honkIo
+`.../nodeApi/honkio: npm start`
 
 If nothing has broken since I submitted the project you should be able to:
 
